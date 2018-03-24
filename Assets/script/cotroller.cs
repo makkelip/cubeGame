@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class cotroller : MonoBehaviour
 {
+    private float rotateSpeed = 0.15f;
+    private float angle = 90.0f;
+    private bool rotating = false;
 
     // Use this for initialization
     void Start()
@@ -14,9 +17,24 @@ public class cotroller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        if (!rotating)
         {
-
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                StartCoroutine(RotateAround(Vector3.right, angle, rotateSpeed));
+            }
+            else if (Input.GetKeyDown(KeyCode.S))
+            {
+                StartCoroutine(RotateAround(Vector3.right, angle * -1, rotateSpeed));
+            }
+            else if (Input.GetKeyDown(KeyCode.A))
+            {
+                StartCoroutine(RotateAround(Vector3.forward, angle, rotateSpeed));
+            }
+            else if (Input.GetKeyDown(KeyCode.D))
+            {
+                StartCoroutine(RotateAround(Vector3.forward, angle * -1, rotateSpeed));
+            }
         }
     }
 
@@ -24,7 +42,9 @@ public class cotroller : MonoBehaviour
     {
         float elapsed = 0.0f;
         float rotated = 0.0f;
-        while (elapsed < duration)
+
+        rotating = true;
+        while (elapsed + Time.deltaTime < duration)
         {
             float step = angle / duration * Time.deltaTime;
             transform.RotateAround(transform.position, axis, step);
@@ -33,5 +53,6 @@ public class cotroller : MonoBehaviour
             yield return null;
         }
         transform.RotateAround(transform.position, axis, angle - rotated);
+        rotating = false;
     }
 }
