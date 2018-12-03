@@ -3,14 +3,14 @@
 public class Cotroller : MonoBehaviour
 {
 
-    public GameObject cube;
+    public GameObject cubeGrid;
 
-    private CubeController cubeController;
+    private CubeGrid cubeController;
 
     // Use this for initialization
     void Start()
     {
-        cubeController = cube.GetComponent<CubeController>();
+        cubeController = cubeGrid.GetComponent<CubeGrid>();
     }
 
     // Update is called once per frame
@@ -18,19 +18,16 @@ public class Cotroller : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            cubeController.RotateUp();
+            cubeController.Rotate();
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
-            cubeController.RotateDown();
         }
         else if (Input.GetKeyDown(KeyCode.A))
         {
-            cubeController.RotateLeft();
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
-            cubeController.RotateRight();
         }
     }
 }
