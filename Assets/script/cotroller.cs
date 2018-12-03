@@ -1,58 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class cotroller : MonoBehaviour
+public class Cotroller : MonoBehaviour
 {
-    private float rotateSpeed = 0.15f;
-    private float angle = 90.0f;
-    private bool rotating = false;
+
+    public GameObject cube;
+
+    private CubeController cubeController;
 
     // Use this for initialization
     void Start()
     {
-
+        cubeController = cube.GetComponent<CubeController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!rotating)
+        if (Input.GetKeyDown(KeyCode.W))
         {
-            if (Input.GetKeyDown(KeyCode.W))
-            {
-                StartCoroutine(RotateAround(Vector3.right, angle, rotateSpeed));
-            }
-            else if (Input.GetKeyDown(KeyCode.S))
-            {
-                StartCoroutine(RotateAround(Vector3.right, angle * -1, rotateSpeed));
-            }
-            else if (Input.GetKeyDown(KeyCode.A))
-            {
-                StartCoroutine(RotateAround(Vector3.forward, angle, rotateSpeed));
-            }
-            else if (Input.GetKeyDown(KeyCode.D))
-            {
-                StartCoroutine(RotateAround(Vector3.forward, angle * -1, rotateSpeed));
-            }
+            cubeController.RotateUp();
         }
-    }
-
-    IEnumerator RotateAround(Vector3 axis, float angle, float duration)
-    {
-        float elapsed = 0.0f;
-        float rotated = 0.0f;
-
-        rotating = true;
-        while (elapsed + Time.deltaTime < duration)
+        else if (Input.GetKeyDown(KeyCode.S))
         {
-            float step = angle / duration * Time.deltaTime;
-            transform.RotateAround(transform.position, axis, step);
-            elapsed += Time.deltaTime;
-            rotated += step;
-            yield return null;
+            cubeController.RotateDown();
         }
-        transform.RotateAround(transform.position, axis, angle - rotated);
-        rotating = false;
+        else if (Input.GetKeyDown(KeyCode.A))
+        {
+            cubeController.RotateLeft();
+        }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            cubeController.RotateRight();
+        }
     }
 }
