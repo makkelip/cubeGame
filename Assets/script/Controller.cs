@@ -17,16 +17,19 @@ public class Controller : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            cubeController.Rotate();
+            cubeController.RotateUp();
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
+            cubeController.RotateDown();
         }
         else if (Input.GetKeyDown(KeyCode.A))
         {
+            cubeController.RotateLeft();
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
+            cubeController.RotateRight();
         }
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class CubeGrid : MonoBehaviour {
     
     public int size;
@@ -11,7 +10,7 @@ public class CubeGrid : MonoBehaviour {
 
     private List<CubeController> cubeControllers;
 
-    public void Rotate()
+    public void RotateLeft()
     {
         foreach(CubeController c in cubeControllers)
         {
@@ -19,8 +18,32 @@ public class CubeGrid : MonoBehaviour {
         }
     }
 
-	// Use this for initialization
-	void Awake () {
+    public void RotateRight()
+    {
+        foreach (CubeController c in cubeControllers)
+        {
+            c.RotateRight();
+        }
+    }
+
+    public void RotateDown()
+    {
+        foreach (CubeController c in cubeControllers)
+        {
+            c.RotateDown();
+        }
+    }
+
+    public void RotateUp()
+    {
+        foreach (CubeController c in cubeControllers)
+        {
+            c.RotateUp();
+        }
+    }
+
+    // Use this for initialization
+    void Start () {
         if (transform.childCount > 0) return;
 
         cubeControllers = new List<CubeController>();
