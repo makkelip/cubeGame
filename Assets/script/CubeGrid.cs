@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class CubeGrid : MonoBehaviour {
     
     public int size;
@@ -19,7 +20,9 @@ public class CubeGrid : MonoBehaviour {
     }
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
+        if (transform.childCount > 0) return;
+
         cubeControllers = new List<CubeController>();
         Vector3 thisPos = transform.position;
 

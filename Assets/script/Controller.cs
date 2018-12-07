@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
-public class Cotroller : MonoBehaviour
+public class Controller : MonoBehaviour
 {
-
     public GameObject cubeGrid;
 
     private CubeGrid cubeController;
