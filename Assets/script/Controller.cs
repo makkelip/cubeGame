@@ -2,14 +2,15 @@
 
 public class Controller : MonoBehaviour
 {
-    public GameObject cubeGrid;
+    private GameObject cubeGrid;
 
     private CubeGrid cubeController;
 
     // Use this for initialization
     void Start()
     {
-        cubeController = cubeGrid.GetComponent<CubeGrid>();
+        cubeController = GameObject.FindObjectOfType<CubeGrid>();
+        //cubeController = cubeGrid.GetComponent<CubeGrid>();
     }
 
     // Update is called once per frame
