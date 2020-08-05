@@ -3,21 +3,45 @@ using UnityEngine;
 
 public class CubeController : MonoBehaviour {
 
+    public enum TURN_DIRECTION {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT
+    }
+
     private readonly float rotateSpeed = 0.15f;
     private readonly float angle = 90.0f;
     private bool rotating = false;
 
     // Use this for initialization
-    void Start()
-    {
+    void Start() {
 
     }
 
     // Update is called once per frame
     void Update() {}
 
-    public void RotateLeft()
-    {
+    public void Rotate(CubeController.TURN_DIRECTION direction) {
+        if (!rotating) {
+            switch (direction) {
+                case CubeController.TURN_DIRECTION.LEFT:
+                    StartCoroutine(RotateAround(Vector3.forward, angle * -1, rotateSpeed));
+                break;
+                case CubeController.TURN_DIRECTION.RIGHT:
+                    StartCoroutine(RotateAround(Vector3.forward, angle, rotateSpeed));
+                break;
+                case CubeController.TURN_DIRECTION.UP:
+                    StartCoroutine(RotateAround(Vector3.right, angle * -1, rotateSpeed));
+                break;
+                case CubeController.TURN_DIRECTION.DOWN:
+                    StartCoroutine(RotateAround(Vector3.right, angle, rotateSpeed));
+                break;
+            }
+        }
+    }
+
+    public void RotateLeft() {
         if(!rotating)
             StartCoroutine(RotateAround(Vector3.forward, angle * -1, rotateSpeed));
     }

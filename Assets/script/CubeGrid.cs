@@ -1,45 +1,42 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static CubeController;
 
 public class CubeGrid : MonoBehaviour {
     
     public int size;
-    public float gap = 1.5f;
+    public float distance = 1.5f;
     public GameObject cube;
 
-    private List<CubeController> cubeControllers;
+    private List<CubeController> cubeControllers = null;
 
-    public void RotateLeft()
-    {
-        foreach(CubeController c in cubeControllers)
-        {
-            c.RotateLeft();
+    private void RotateRow(int row, CubeController.TURN_DIRECTION direction) {
+        for (int i = 0; i < size; i++) {
+            this.cubeControllers[row + (i * size)].Rotate(direction);
         }
     }
 
-    public void RotateRight()
-    {
-        foreach (CubeController c in cubeControllers)
-        {
-            c.RotateRight();
+    private void RotateColumn(int column, CubeController.TURN_DIRECTION direction) {
+        for (int i = 0; i < size; i ++) {
+            this.cubeControllers[(column * size) + i].Rotate(direction);
         }
     }
 
-    public void RotateDown()
-    {
-        foreach (CubeController c in cubeControllers)
-        {
-            c.RotateDown();
-        }
+    public void RotateRowUp(int row) {
+        RotateRow(row, CubeController.TURN_DIRECTION.UP);
     }
 
-    public void RotateUp()
-    {
-        foreach (CubeController c in cubeControllers)
-        {
-            c.RotateUp();
-        }
+    public void RotateRowDown(int row) {
+        RotateRow(row, CubeController.TURN_DIRECTION.DOWN);
+    }
+
+    public void RotateColumnLeft(int column) {
+        RotateColumn(column, CubeController.TURN_DIRECTION.LEFT);
+    }
+
+    public void RotateColumnRight(int column) {
+        RotateColumn(column, CubeController.TURN_DIRECTION.RIGHT);
     }
 
     // Use this for initialization
@@ -47,26 +44,26 @@ public class CubeGrid : MonoBehaviour {
         if (transform.childCount > 0) return;
 
         cubeControllers = new List<CubeController>();
-        Vector3 thisPos = transform.position;
 
-        for (int i = 0; i < size; i++)
-        {
-            for (int j = 0; j < size; j++)
-            {
-                Vector3 clonePos = new Vector3(thisPos.x + i * gap, thisPos.y, thisPos.z + j * gap);
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                Vector3 clonePos = new Vector3(
+                    transform.position.x + i * distance,
+                    transform.position.y + j * distance,
+                    transform.position.z
+                );
                 GameObject clone = Instantiate(cube, clonePos, transform.rotation, transform);
 
-                if (!clone.GetComponent<CubeController>())
-                {
+                if (!clone.GetComponent<CubeController>()) {
                     clone.AddComponent<CubeController>();
                 }
                 cubeControllers.Add(clone.GetComponent<CubeController>());
             }
         }
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    }
+    
+    // Update is called once per frame
+    void Update () {
+        
+    }
 }
