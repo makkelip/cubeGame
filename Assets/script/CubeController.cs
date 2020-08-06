@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class CubeController : MonoBehaviour {
@@ -20,63 +21,38 @@ public class CubeController : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {}
+    void Update() { }
 
-    public void Rotate(CubeController.TURN_DIRECTION direction) {
-        if (!rotating) {
-            switch (direction) {
-                case CubeController.TURN_DIRECTION.LEFT:
-                    StartCoroutine(RotateAround(Vector3.forward, angle * -1, rotateSpeed));
-                break;
-                case CubeController.TURN_DIRECTION.RIGHT:
-                    StartCoroutine(RotateAround(Vector3.forward, angle, rotateSpeed));
-                break;
-                case CubeController.TURN_DIRECTION.UP:
-                    StartCoroutine(RotateAround(Vector3.right, angle * -1, rotateSpeed));
-                break;
-                case CubeController.TURN_DIRECTION.DOWN:
-                    StartCoroutine(RotateAround(Vector3.right, angle, rotateSpeed));
-                break;
-            }
+    public IEnumerator Rotate(CubeController.TURN_DIRECTION direction, Action callback) {
+        switch (direction) {
+            case CubeController.TURN_DIRECTION.LEFT:
+                return RotateAround(Vector3.up, angle * -1, rotateSpeed, callback);
+            case CubeController.TURN_DIRECTION.RIGHT:
+                return RotateAround(Vector3.up, angle, rotateSpeed, callback);
+            case CubeController.TURN_DIRECTION.UP:
+                return RotateAround(Vector3.right, angle, rotateSpeed, callback);
+            case CubeController.TURN_DIRECTION.DOWN:
+                return RotateAround(Vector3.right, angle * -1, rotateSpeed, callback);
+            default:
+                return null;
         }
     }
 
-    public void RotateLeft() {
-        if(!rotating)
-            StartCoroutine(RotateAround(Vector3.forward, angle * -1, rotateSpeed));
-    }
-
-    public void RotateRight()
-    {
-        if (!rotating)
-            StartCoroutine(RotateAround(Vector3.forward, angle, rotateSpeed));
-    }
-
-    public void RotateUp()
-    {
-        if (!rotating)
-            StartCoroutine(RotateAround(Vector3.right, angle * -1, rotateSpeed));
-    }
-
-    public void RotateDown()
-    {
-        if (!rotating)
-            StartCoroutine(RotateAround(Vector3.right, angle, rotateSpeed));
-    }
-
-    public Quaternion GetRotation()
-    {
+    public Quaternion GetRotation() {
         return transform.localRotation;
     }
 
-    private IEnumerator RotateAround(Vector3 axis, float angle, float duration)
-    {
+    private IEnumerator RotateAround(Vector3 axis, float angle, float duration, Action callback) {
+        yield return RotateAround(axis, angle, duration);
+        callback.Invoke();
+    }
+
+    private IEnumerator RotateAround(Vector3 axis, float angle, float duration) {
         float elapsed = 0.0f;
         float rotated = 0.0f;
 
         rotating = true;
-        while (elapsed + Time.deltaTime < duration)
-        {
+        while (elapsed + Time.deltaTime < duration) {
             float step = angle / duration * Time.deltaTime;
             transform.RotateAround(transform.position, axis, step);
             elapsed += Time.deltaTime;

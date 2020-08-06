@@ -225,7 +225,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 900756797}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0172082d40b2044bb74282de1fcb192, type: 3}
+  m_Script: {fileID: 11500000, guid: f77d3d4e77ae89b4d9d3a1fb0e068764, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!850595691 &1001472862
@@ -319,7 +319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: 3
-  gap: 1.2
+  distance: 1.5
   cube: {fileID: 1186405586520346, guid: e06468abd0e2b3341b25a64d027071e8, type: 3}
 --- !u!4 &1040997922
 Transform:
